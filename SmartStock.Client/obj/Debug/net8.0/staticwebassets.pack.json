@@ -1,0 +1,61 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Max.Lew\\WorkItem\\SmartStock\\SmartStock.Client\\bin\\Debug\\net8.0\\wwwroot\\_framework\\blazor.webassembly.js",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js"
+    },
+    {
+      "Id": "C:\\Users\\Max.Lew\\WorkItem\\SmartStock\\SmartStock.Client\\obj\\Debug\\net8.0\\compressed\\j036wpmmf3.gz",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js.gz"
+    },
+    {
+      "Id": "C:\\Users\\Max.Lew\\WorkItem\\SmartStock\\SmartStock.Client\\obj\\Debug\\net8.0\\scopedcss\\bundle\\SmartStock.Client.styles.css",
+      "PackagePath": "staticwebassets\\SmartStock.Client.styles.css"
+    },
+    {
+      "Id": "C:\\Users\\Max.Lew\\WorkItem\\SmartStock\\SmartStock.Client\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\Max.Lew\\WorkItem\\SmartStock\\SmartStock.Client\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Max.Lew\\WorkItem\\SmartStock\\SmartStock.Client\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Max.Lew\\WorkItem\\SmartStock\\SmartStock.Client\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\Max.Lew\\WorkItem\\SmartStock\\SmartStock.Client\\wwwroot\\icon-192.png",
+      "PackagePath": "staticwebassets\\icon-192.png"
+    },
+    {
+      "Id": "C:\\Users\\Max.Lew\\WorkItem\\SmartStock\\SmartStock.Client\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\Max.Lew\\WorkItem\\SmartStock\\SmartStock.Client\\wwwroot\\sample-data\\weather.json",
+      "PackagePath": "staticwebassets\\sample-data\\weather.json"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.SmartStock.Client.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.SmartStock.Client.props",
+      "PackagePath": "build\\SmartStock.Client.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.SmartStock.Client.props",
+      "PackagePath": "buildMultiTargeting\\SmartStock.Client.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.SmartStock.Client.props",
+      "PackagePath": "buildTransitive\\SmartStock.Client.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
