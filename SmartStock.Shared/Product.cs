@@ -13,4 +13,5 @@ public class Product
     // Navigation property
     public Category Category { get; set; } = null!;
     public ICollection<PurchaseOrderItem> PurchaseOrderItems { get; set; } = new List<PurchaseOrderItem>();
+    public ICollection<SalesOrderItem> SalesOrderItems { get; set; } = new List<SalesOrderItem>();
 }
