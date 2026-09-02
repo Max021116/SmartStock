@@ -12,4 +12,5 @@ public class Product
     public DateTime CreatedAt { get; set; }
     // Navigation property
     public Category Category { get; set; } = null!;
+    public ICollection<PurchaseOrderItem> PurchaseOrderItems { get; set; } = new List<PurchaseOrderItem>();
 }
