@@ -30,4 +30,37 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(AppDbContext).Assembly);
     }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+{
+    var now = DateTime.UtcNow;
+    const string currentUser = "system"; // placeholder until you wire real user
+
+    foreach (var entry in ChangeTracker.Entries<IAuditable>())
+    {
+        switch (entry.State)
+        {
+            case EntityState.Added:
+                entry.Entity.CreatedAt = now;
+                entry.Entity.CreatedBy = currentUser;
+                entry.Entity.IsDeleted = false;
+                break;
+
+            case EntityState.Modified:
+                entry.Entity.UpdatedAt = now;
+                entry.Entity.UpdatedBy = currentUser;
+                break;
+
+            case EntityState.Deleted:
+                // Soft delete instead of hard delete
+                entry.State = EntityState.Modified;
+                entry.Entity.IsDeleted = true;
+                entry.Entity.UpdatedAt = now;
+                entry.Entity.UpdatedBy = currentUser;
+                break;
+        }
+    }
+
+    return await base.SaveChangesAsync(cancellationToken);
+}
 }

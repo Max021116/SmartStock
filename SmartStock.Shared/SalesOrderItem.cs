@@ -10,4 +10,5 @@ public class SalesOrderItem
 
     public SalesOrder SalesOrder { get; set; } = null!;
     public Product Product { get; set; } = null!;
+    public decimal LineTotal { get; private set; }
 }

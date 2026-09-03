@@ -31,5 +31,8 @@ public class SalesOrderConfiguration
             .WithOne(item => item.SalesOrder)
             .HasForeignKey(item => item.SalesOrderId)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        builder.Property(po => po.RowVersion)
+            .IsRowVersion();
     }
 }

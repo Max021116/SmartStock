@@ -8,5 +8,6 @@ public class PurchaseOrder
     public PurchaseOrderStatus Status { get; set; }
     public decimal TotalAmount { get; set; }
     public Supplier Supplier { get; set; } = null!;
+    public byte[] RowVersion { get; set; } = null!;
     public ICollection<PurchaseOrderItem> Items { get; set; } = new List<PurchaseOrderItem>();
 }

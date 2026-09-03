@@ -46,6 +46,11 @@ public class ProductConfiguration
             .HasForeignKey(product => product.CategoryId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        builder.Property(p => p.RowVersion)
+            .IsRowVersion();
+
+        builder.HasQueryFilter(p => !p.IsDeleted);
+
         builder.HasData(
     new Product { Id = 1, SKU = "SKU-001", Name = "Product 1", CategoryId = 2, Price = 999.99m, IsActive = true, CreatedAt = new DateTime(2026, 1, 1), Description = "..." },
     new Product { Id = 2, SKU = "SKU-002", Name = "Product 2", CategoryId = 2, Price = 899.99m, IsActive = true, CreatedAt = new DateTime(2026, 1, 1), Description = "..." },

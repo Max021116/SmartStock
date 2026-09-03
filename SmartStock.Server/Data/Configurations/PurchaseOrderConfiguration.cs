@@ -33,5 +33,8 @@ public class PurchaseOrderConfiguration
             .WithOne(item => item.PurchaseOrder)
             .HasForeignKey(item => item.PurchaseOrderId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Property(po => po.RowVersion)
+            .IsRowVersion();
     }
 }

@@ -9,4 +9,5 @@ public class PurchaseOrderItem
     public decimal UnitCost { get; set; }
     public Product Product { get; set; } = null!;
     public PurchaseOrder PurchaseOrder { get; set; } = null!;
+    public decimal LineTotal { get; private set; }  // DB-computed, read-only
 }

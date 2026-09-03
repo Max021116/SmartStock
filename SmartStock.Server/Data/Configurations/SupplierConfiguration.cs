@@ -26,5 +26,7 @@ public class SupplierConfiguration
 
         builder.Property(supplier => supplier.Address)
             .HasMaxLength(200);
+        
+        builder.HasQueryFilter(c => !c.IsDeleted);
     }
 }
