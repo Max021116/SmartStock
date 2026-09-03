@@ -12,6 +12,10 @@ public class ProductConfiguration
         // Primary key
         builder.HasKey(product => product.Id);
 
+        builder.ToTable(t => t.HasCheckConstraint(
+        "CK_Products_Price",
+        "[Price] >= 0"));
+
         // SKU is required and limited to 100 characters
         builder.Property(product => product.SKU)
             .IsRequired()

@@ -32,5 +32,9 @@ public class StockMovementConfiguration
 
         // Composite index for stock history / balance queries
         builder.HasIndex(m => new { m.ProductId, m.MovementDate });
+
+        builder.ToTable(t => t.HasCheckConstraint(
+    "CK_StockMovements_Quantity",
+    "[Quantity] >= 0"));
     }
 }

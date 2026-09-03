@@ -26,7 +26,9 @@ public class CustomerConfiguration
 
         builder.Property(customer => customer.Address)
             .HasMaxLength(200);
-        
+
         builder.HasQueryFilter(c => !c.IsDeleted);
+
+        builder.HasIndex(c => c.Email);
     }
 }

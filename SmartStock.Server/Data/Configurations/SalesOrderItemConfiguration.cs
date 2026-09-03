@@ -21,5 +21,15 @@ public class SalesOrderItemConfiguration
             .WithMany(p => p.SalesOrderItems)
             .HasForeignKey(item => item.ProductId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.ToTable(t =>
+{
+    t.HasCheckConstraint("CK_SalesOrderItems_Quantity", "[Quantity] >= 0");
+    t.HasCheckConstraint("CK_SalesOrderItems_UnitPrice", "[UnitPrice] >= 0");
+});
+
+        builder.Property(item => item.LineTotal)
+            .HasPrecision(18, 2)
+            .HasComputedColumnSql("[Quantity] * [UnitPrice]", stored: true);
     }
 }

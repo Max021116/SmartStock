@@ -3,11 +3,17 @@ using Microsoft.EntityFrameworkCore;
 using SmartStock.Server.Data;
 using SmartStock.Shared;
 using SmartStock.Server;
+using SmartStock.Server.Repositories;
+using SmartStock.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services
     .AddIdentityCore<ApplicationUser>(options =>
