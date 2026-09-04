@@ -14,10 +14,14 @@ public class CategoryService : ICategoryService
     }
 
     public async Task<IReadOnlyList<Category>> GetAllAsync(CancellationToken cancellationToken = default)
-        => await _unitOfWork.Categories.Query().ToListAsync(cancellationToken);
+        => await _unitOfWork.Categories.Query()
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
 
     public Task<Category?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
-        => _unitOfWork.Categories.GetByIdAsync(id, cancellationToken);
+        => _unitOfWork.Categories.Query()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
 
     public async Task<Category> CreateAsync(Category category, CancellationToken cancellationToken = default)
     {
