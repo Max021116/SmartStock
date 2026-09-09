@@ -247,7 +247,7 @@ namespace SmartStock.Server.Migrations
 
                     b.HasIndex("ParentCategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -369,7 +369,7 @@ namespace SmartStock.Server.Migrations
 
                     b.HasIndex("Email");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("SmartStock.Shared.Invoice", b =>
@@ -405,7 +405,7 @@ namespace SmartStock.Server.Migrations
                     b.HasIndex("SalesOrderId")
                         .IsUnique();
 
-                    b.ToTable("Invoices");
+                    b.ToTable("Invoices", (string)null);
                 });
 
             modelBuilder.Entity("SmartStock.Shared.Product", b =>
@@ -468,7 +468,7 @@ namespace SmartStock.Server.Migrations
                     b.HasIndex("SKU")
                         .IsUnique();
 
-                    b.ToTable("Products", t =>
+                    b.ToTable("Products", null, t =>
                         {
                             t.HasCheckConstraint("CK_Products_Price", "[Price] >= 0");
                         });
@@ -629,7 +629,7 @@ namespace SmartStock.Server.Migrations
 
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("PurchaseOrders");
+                    b.ToTable("PurchaseOrders", (string)null);
                 });
 
             modelBuilder.Entity("SmartStock.Shared.PurchaseOrderItem", b =>
@@ -665,7 +665,7 @@ namespace SmartStock.Server.Migrations
 
                     b.HasIndex("PurchaseOrderId");
 
-                    b.ToTable("PurchaseOrderItems", t =>
+                    b.ToTable("PurchaseOrderItems", null, t =>
                         {
                             t.HasCheckConstraint("CK_PurchaseOrderItems_Quantity", "[Quantity] >= 0");
 
@@ -706,7 +706,7 @@ namespace SmartStock.Server.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("SalesOrders");
+                    b.ToTable("SalesOrders", (string)null);
                 });
 
             modelBuilder.Entity("SmartStock.Shared.SalesOrderItem", b =>
@@ -742,12 +742,33 @@ namespace SmartStock.Server.Migrations
 
                     b.HasIndex("SalesOrderId");
 
-                    b.ToTable("SalesOrderItems", t =>
+                    b.ToTable("SalesOrderItems", null, t =>
                         {
                             t.HasCheckConstraint("CK_SalesOrderItems_Quantity", "[Quantity] >= 0");
 
                             t.HasCheckConstraint("CK_SalesOrderItems_UnitPrice", "[UnitPrice] >= 0");
                         });
+                });
+
+            modelBuilder.Entity("SmartStock.Shared.SalesSummaryByProduct", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalQuantitySold")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalRevenue")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("vw_SalesSummaryByProduct", (string)null);
                 });
 
             modelBuilder.Entity("SmartStock.Shared.StockMovement", b =>
@@ -783,7 +804,7 @@ namespace SmartStock.Server.Migrations
 
                     b.HasIndex("ProductId", "MovementDate");
 
-                    b.ToTable("StockMovements", t =>
+                    b.ToTable("StockMovements", null, t =>
                         {
                             t.HasCheckConstraint("CK_StockMovements_Quantity", "[Quantity] >= 0");
                         });
@@ -837,7 +858,7 @@ namespace SmartStock.Server.Migrations
 
                     b.HasIndex("ContactEmail");
 
-                    b.ToTable("Suppliers");
+                    b.ToTable("Suppliers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

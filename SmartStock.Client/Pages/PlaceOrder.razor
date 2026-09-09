@@ -1,0 +1,65 @@
+@page "/place-order"
+@inject SmartStockApiClient Api
+
+<h3>Place Order</h3>
+
+<div>
+    <label>Customer Id:</label>
+    <input type="number" @bind="customerId" />
+</div>
+<div>
+    <label>Product Id:</label>
+    <input type="number" @bind="productId" />
+</div>
+<div>
+    <label>Quantity:</label>
+    <input type="number" @bind="quantity" />
+</div>
+<div>
+    <label>Unit Price:</label>
+    <input type="number" step="0.01" @bind="unitPrice" />
+</div>
+
+<button @onclick="SubmitAsync">Place Order</button>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <p class="@(isError ? "text-danger" : "text-success")">@message</p>
+}
+
+@code {
+    private int customerId = 1;
+    private int productId = 1;
+    private int quantity = 1;
+    private decimal unitPrice = 25.50m;
+    private string message = "";
+    private bool isError;
+
+    private async Task SubmitAsync()
+    {
+        message = "";
+        var request = new PlaceOrderRequest
+        {
+            CustomerId = customerId,
+            Items = [ new PlaceOrderLineRequest { ProductId = productId, Quantity = quantity, UnitPrice = unitPrice } ]
+        };
+
+        var (success, order, error, statusCode) = await Api.PlaceOrderAsync(request);
+
+        if (success && order is not null)
+        {
+            isError = false;
+            message = $"Order #{order.OrderId} placed! Total: {order.TotalAmount:C}, Invoice: {order.InvoiceNumber}";
+        }
+        else
+        {
+            isError = true;
+            message = statusCode switch
+            {
+                400 => $"Business rule failed: {error?.Message}",
+                409 => $"Conflict: {error?.Message}",
+                _ => error?.Message ?? $"Request failed ({statusCode})"
+            };
+        }
+    }
+}

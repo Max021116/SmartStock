@@ -22,6 +22,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<SalesOrderItem> SalesOrderItems => Set<SalesOrderItem>();
     public DbSet<Invoice> Invoices => Set<Invoice>();
     public DbSet<StockMovement> StockMovements => Set<StockMovement>();
+    public DbSet<SalesSummaryByProduct> SalesSummaryByProduct => Set<SalesSummaryByProduct>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -29,38 +30,45 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(AppDbContext).Assembly);
+
+        modelBuilder.Entity<SalesSummaryByProduct>(entity =>
+{
+    entity.HasNoKey();
+    entity.ToView("vw_SalesSummaryByProduct");
+    entity.Property(e => e.TotalRevenue).HasPrecision(18, 2);
+});
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-{
-    var now = DateTime.UtcNow;
-    const string currentUser = "system"; // placeholder until you wire real user
-
-    foreach (var entry in ChangeTracker.Entries<IAuditable>())
     {
-        switch (entry.State)
+        var now = DateTime.UtcNow;
+        const string currentUser = "system"; // placeholder until you wire real user
+
+        foreach (var entry in ChangeTracker.Entries<IAuditable>())
         {
-            case EntityState.Added:
-                entry.Entity.CreatedAt = now;
-                entry.Entity.CreatedBy = currentUser;
-                entry.Entity.IsDeleted = false;
-                break;
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                    entry.Entity.CreatedAt = now;
+                    entry.Entity.CreatedBy = currentUser;
+                    entry.Entity.IsDeleted = false;
+                    break;
 
-            case EntityState.Modified:
-                entry.Entity.UpdatedAt = now;
-                entry.Entity.UpdatedBy = currentUser;
-                break;
+                case EntityState.Modified:
+                    entry.Entity.UpdatedAt = now;
+                    entry.Entity.UpdatedBy = currentUser;
+                    break;
 
-            case EntityState.Deleted:
-                // Soft delete instead of hard delete
-                entry.State = EntityState.Modified;
-                entry.Entity.IsDeleted = true;
-                entry.Entity.UpdatedAt = now;
-                entry.Entity.UpdatedBy = currentUser;
-                break;
+                case EntityState.Deleted:
+                    // Soft delete instead of hard delete
+                    entry.State = EntityState.Modified;
+                    entry.Entity.IsDeleted = true;
+                    entry.Entity.UpdatedAt = now;
+                    entry.Entity.UpdatedBy = currentUser;
+                    break;
+            }
         }
-    }
 
-    return await base.SaveChangesAsync(cancellationToken);
-}
+        return await base.SaveChangesAsync(cancellationToken);
+    }
 }

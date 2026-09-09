@@ -1,0 +1,55 @@
+@page "/products"
+@inject SmartStockApiClient Api
+
+<h3>Products</h3>
+
+<input @bind="search" placeholder="Search..." />
+<button @onclick="LoadAsync">Search</button>
+
+@if (loading) { <p>Loading...</p> }
+else if (products is null) { <p>Failed to load.</p> }
+else
+{
+    <table class="table">
+        <thead>
+            <tr><th>SKU</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var p in products.Items)
+            {
+                <tr>
+                    <td>@p.SKU</td>
+                    <td>@p.Name</td>
+                    <td>@p.CategoryName</td>
+                    <td>@p.Price.ToString("C")</td>
+                    <td>@p.CurrentStock</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button disabled="@(page <= 1)" @onclick="PrevPage">Prev</button>
+    <span>Page @(page) of @TotalPages</span>
+    <button disabled="@(page >= TotalPages)" @onclick="NextPage">Next</button>
+}
+
+@code {
+    private PagedResult<ProductListDto>? products;
+    private bool loading = true;
+    private int page = 1;
+    private string search = "";
+    private int TotalPages => products is null || products.PageSize == 0
+        ? 1 : (int)Math.Ceiling(products.TotalCount / (double)products.PageSize);
+
+    protected override async Task OnInitializedAsync() => await LoadAsync();
+
+    private async Task LoadAsync()
+    {
+        loading = true;
+        products = await Api.GetProductsAsync(page, search);
+        loading = false;
+    }
+
+    private async Task PrevPage() { if (page > 1) { page--; await LoadAsync(); } }
+    private async Task NextPage() { if (page < TotalPages) { page++; await LoadAsync(); } }
+}
